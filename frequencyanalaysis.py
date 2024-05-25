@@ -129,55 +129,55 @@ def calculate_shannon_entropy(fft_magnitudes_df, freqs_df, sampling_rate):
 
 # Örnek sinyal ve örnekleme frekansı
 # Örnek sinyal ve örnekleme frekansı
-sampling_rate = 10000
-time = np.arange(0, 1.0, 1.0 / sampling_rate)
-frequency = 100
-fft_magnitudes, freqs = np.sin(2 * np.pi * frequency * time) - (np.cos(8 * np.pi * frequency * time)/2)
+# sampling_rate = 10000
+# time = np.arange(0, 1.0, 1.0 / sampling_rate)
+# frequency = 100
+# fft_magnitudes, freqs = np.sin(2 * np.pi * frequency * time) - (np.cos(8 * np.pi * frequency * time)/2)
 
-# Fourier dönüşümünü al ve genlik spektrumunu hesapla
-fft_values = fft(fft_magnitudes, freqs)
-fft_magnitudes = np.abs(fft_values)
-freqs = fftfreq(len(fft_magnitudes, freqs), d=1/sampling_rate)
-positive_freqs = freqs[freqs >= 0]
-positive_magnitudes = fft_magnitudes[freqs >= 0]
+# # Fourier dönüşümünü al ve genlik spektrumunu hesapla
+# fft_values = fft(fft_magnitudes, freqs)
+# fft_magnitudes = np.abs(fft_values)
+# freqs = fftfreq(len(fft_magnitudes, freqs), d=1/sampling_rate)
+# positive_freqs = freqs[freqs >= 0]
+# positive_magnitudes = fft_magnitudes[freqs >= 0]
 
-# Frekans spektrumunu çiz
-plt.figure(figsize=(10, 6))
-plt.plot(positive_freqs, positive_magnitudes)
-plt.title('Frekans Spektrumu')
-plt.xlabel('Frekans (Hz)')
-plt.ylabel('Genlik')
-plt.grid(True)
-plt.show()
+# # Frekans spektrumunu çiz
+# plt.figure(figsize=(10, 6))
+# plt.plot(positive_freqs, positive_magnitudes)
+# plt.title('Frekans Spektrumu')
+# plt.xlabel('Frekans (Hz)')
+# plt.ylabel('Genlik')
+# plt.grid(True)
+# plt.show()
 
-# Ortalama Frekans
-mean_freq = calculate_mean_frequency(fft_magnitudes, freqs, sampling_rate)
-print(f"Ortalama Frekans: {mean_freq} Hz")
+# # Ortalama Frekans
+# mean_freq = calculate_mean_frequency(fft_magnitudes, freqs, sampling_rate)
+# print(f"Ortalama Frekans: {mean_freq} Hz")
 
-# Standart Sapma Frekansı
-std_freq = calculate_std_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq)
-print(f"Standart Sapma Frekansı: {std_freq} Hz")
+# # Standart Sapma Frekansı
+# std_freq = calculate_std_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq)
+# print(f"Standart Sapma Frekansı: {std_freq} Hz")
 
-# Çarpıklık Frekansı
-skewness_freq = calculate_skewness_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq, std_freq)
-print(f"Çarpıklık Frekansı: {skewness_freq}")
+# # Çarpıklık Frekansı
+# skewness_freq = calculate_skewness_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq, std_freq)
+# print(f"Çarpıklık Frekansı: {skewness_freq}")
 
-# Basıklık Frekansı
-kurtosis_freq = calculate_kurtosis_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq, std_freq)
-print(f"Basıklık Frekansı: {kurtosis_freq}")
+# # Basıklık Frekansı
+# kurtosis_freq = calculate_kurtosis_frequency(fft_magnitudes, freqs, sampling_rate, mean_freq, std_freq)
+# print(f"Basıklık Frekansı: {kurtosis_freq}")
 
-# Frekans Merkezi
-freq_center = calculate_frequency_center(fft_magnitudes, freqs, sampling_rate)
-print(f"Frekans Merkezi: {freq_center} Hz")
+# # Frekans Merkezi
+# freq_center = calculate_frequency_center(fft_magnitudes, freqs, sampling_rate)
+# print(f"Frekans Merkezi: {freq_center} Hz")
 
-# Karekök Ortalama Kare Frekans
-rms_freq = calculate_rms_frequency(fft_magnitudes, freqs, sampling_rate)
-print(f"Karekök Ortalama Kare Frekans: {rms_freq} Hz")
+# # Karekök Ortalama Kare Frekans
+# rms_freq = calculate_rms_frequency(fft_magnitudes, freqs, sampling_rate)
+# print(f"Karekök Ortalama Kare Frekans: {rms_freq} Hz")
 
-# Karekök Varyans Frekansı
-root_variance_freq = calculate_root_variance_frequency(fft_magnitudes, freqs, sampling_rate, freq_center)
-print(f"Karekök Varyans Frekansı: {root_variance_freq} Hz")
+# # Karekök Varyans Frekansı
+# root_variance_freq = calculate_root_variance_frequency(fft_magnitudes, freqs, sampling_rate, freq_center)
+# print(f"Karekök Varyans Frekansı: {root_variance_freq} Hz")
 
-# Shannon Entropisi
-shannon_entropy = calculate_shannon_entropy(fft_magnitudes, freqs, sampling_rate)
-print(f"Shannon Entropisi: {shannon_entropy}")
+# # Shannon Entropisi
+# shannon_entropy = calculate_shannon_entropy(fft_magnitudes, freqs, sampling_rate)
+# print(f"Shannon Entropisi: {shannon_entropy}")
