@@ -18,56 +18,110 @@ def calculate_mean_frequency(fft_magnitudes, freqs, sampling_rate):
     mean_frequency = np.sum(positive_magnitudes) / len(positive_magnitudes)
     return mean_frequency
 
-def calculate_std_frequency(fft_magnitudes, freqs, sampling_rate, mean_frequency):
 
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    std_frequency = np.sqrt(np.sum((positive_freqs - mean_frequency)**2 * positive_magnitudes) / np.sum(positive_magnitudes))
-    return std_frequency
+def calculate_mean_frequency(fft_magnitudes_df, freqs_df, sampling_rate):
+    results = []
+    
+    for column in fft_magnitudes_df.columns:
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        mean_frequency = np.sum(positive_magnitudes) / len(positive_magnitudes)
+        results.append(mean_frequency)
+    
+    return np.array(results)
 
-def calculate_skewness_frequency(fft_magnitudes, freqs, sampling_rate, mean_frequency, std_frequency):
+def calculate_std_frequency(fft_magnitudes_df, freqs_df, sampling_rate, mean_frequencies):
+    results = []
 
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    skewness_frequency = np.sum((positive_freqs - mean_frequency)**3 * positive_magnitudes) / (np.sum(positive_magnitudes) * std_frequency**3)
-    return skewness_frequency
-
-def calculate_kurtosis_frequency(fft_magnitudes, freqs, sampling_rate, mean_frequency, std_frequency):
-
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    kurtosis_frequency = np.sum((positive_freqs - mean_frequency)**4 * positive_magnitudes) / (np.sum(positive_magnitudes) * std_frequency**4)
-    return kurtosis_frequency
-
-def calculate_frequency_center(fft_magnitudes, freqs, sampling_rate):
-
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    frequency_center = np.sum(positive_freqs * positive_magnitudes) / np.sum(positive_magnitudes)
-    return frequency_center
-
-def calculate_rms_frequency(fft_magnitudes, freqs, sampling_rate):
-
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    rms_frequency = np.sqrt(np.sum((positive_freqs**2) * positive_magnitudes) / np.sum(positive_magnitudes))
-    return rms_frequency
-
-def calculate_root_variance_frequency(fft_magnitudes, freqs, sampling_rate, frequency_center):
-
-    positive_freqs = freqs[freqs >= 0]
-    positive_magnitudes = fft_magnitudes[freqs >= 0]
-    root_variance_frequency = np.sqrt(np.sum(((positive_freqs - frequency_center)**2) * positive_magnitudes) / np.sum(positive_magnitudes))
-    return root_variance_frequency
+    for i, column in enumerate(fft_magnitudes_df.columns):
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        mean_frequency = mean_frequencies[i]
+        std_frequency = np.sqrt(np.sum((positive_freqs - mean_frequency)**2 * positive_magnitudes) / np.sum(positive_magnitudes))
+        results.append(std_frequency)
+    
+    return np.array(results)
 
 
-def calculate_shannon_entropy(fft_magnitudes, freqs, sampling_rate):
-    fft_values = fft(fft_magnitudes, freqs)
-    fft_magnitudes = np.abs(fft_values)
-    positive_magnitudes = fft_magnitudes[fftfreq(len(fft_magnitudes, freqs), d=1/sampling_rate) >= 0]
-    normalized_magnitudes = positive_magnitudes / np.sum(positive_magnitudes)
-    shannon_entropy = -np.sum(normalized_magnitudes * np.log(normalized_magnitudes + 1e-12))  # +1e-12 to avoid log(0)
-    return shannon_entropy
+def calculate_skewness_frequency(fft_magnitudes_df, freqs_df, sampling_rate, mean_frequencies, std_frequencies):
+    results = []
+
+    for i, column in enumerate(fft_magnitudes_df.columns):
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        mean_frequency = mean_frequencies[i]
+        std_frequency = std_frequencies[i]
+        skewness_frequency = np.sum((positive_freqs - mean_frequency)**3 * positive_magnitudes) / (np.sum(positive_magnitudes) * std_frequency**3)
+        results.append(skewness_frequency)
+    
+    return np.array(results)
+
+def calculate_kurtosis_frequency(fft_magnitudes_df, freqs_df, sampling_rate, mean_frequencies, std_frequencies):
+    results = []
+
+    for i, column in enumerate(fft_magnitudes_df.columns):
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        mean_frequency = mean_frequencies[i]
+        std_frequency = std_frequencies[i]
+        kurtosis_frequency = np.sum((positive_freqs - mean_frequency)**4 * positive_magnitudes) / (np.sum(positive_magnitudes) * std_frequency**4)
+        results.append(kurtosis_frequency)
+    
+    return np.array(results)
+
+def calculate_frequency_center(fft_magnitudes_df, freqs_df, sampling_rate):
+    results = []
+
+    for column in fft_magnitudes_df.columns:
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        frequency_center = np.sum(positive_freqs * positive_magnitudes) / np.sum(positive_magnitudes)
+        results.append(frequency_center)
+    
+    return np.array(results)
+
+
+def calculate_rms_frequency(fft_magnitudes_df, freqs_df, sampling_rate):
+    results = []
+
+    for column in fft_magnitudes_df.columns:
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        rms_frequency = np.sqrt(np.sum((positive_freqs**2) * positive_magnitudes) / np.sum(positive_magnitudes))
+        results.append(rms_frequency)
+    
+    return np.array(results)
+
+def calculate_root_variance_frequency(fft_magnitudes_df, freqs_df, sampling_rate, frequency_centers):
+    results = []
+
+    for i, column in enumerate(fft_magnitudes_df.columns):
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        frequency_center = frequency_centers[i]
+        root_variance_frequency = np.sqrt(np.sum(((positive_freqs - frequency_center)**2) * positive_magnitudes) / np.sum(positive_magnitudes))
+        results.append(root_variance_frequency)
+    
+    return np.array(results)
+
+def calculate_shannon_entropy(fft_magnitudes_df, freqs_df, sampling_rate):
+    results = []
+
+    for column in fft_magnitudes_df.columns:
+        positive_freqs = freqs_df[column][freqs_df[column] >= 0]
+        positive_magnitudes = fft_magnitudes_df[column][freqs_df[column] >= 0]
+        
+        # Normalize the magnitudes to get probabilities
+        magnitudes_sum = np.sum(positive_magnitudes)
+        probabilities = positive_magnitudes / magnitudes_sum
+        
+        # Calculate Shannon entropy
+        shannon_entropy = -np.sum(probabilities * np.log2(probabilities))
+        results.append(shannon_entropy)
+    
+    return np.array(results)
+
+
 
 # Shannon Entropisi
 #shannon_entropy = calculate_shannon_entropy(fft_magnitudes, freqs, sampling_rate)
