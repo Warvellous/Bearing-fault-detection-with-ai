@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import scipy
 from scipy.stats import entropy
 from scipy.optimize import curve_fit
-# import frequencyanalaysis as frq_anlysis
+import frequencyanalaysis as frq_anlysis
 import numpy as np
 from scipy.fft import fft, fftfreq
 import matplotlib.pyplot as plt
@@ -49,15 +49,15 @@ def freq_features(dataset_path, id_set=None):
         freqs = pd.DataFrame({col: fftfreq(((signal[col]).shape[0]), d=1/SAMPLING_RATE) for col in signal.columns})
 
 
-        # # freqfeatures
-        # mean_abs = np.array(frq_anlysis.calculate_mean_frequency(fft_magnitudes, freqs, SAMPLING_RATE))
-        # std = np.array(frq_anlysis.calculate_std_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency))
-        # skew = np.array(frq_anlysis.calculate_skewness_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency, std_frequency))
-        # kurtosis = np.array(frq_anlysis.calculate_kurtosis_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency, std_frequency))
-        # freq_center=np.array(frq_anlysis.calculate_frequency_center(fft_magnitudes, freqs, SAMPLING_RATE))
-        # rmsf=np.array(frq_anlysis.calculate_rms_frequency(fft_magnitudes, freqs, SAMPLING_RATE))
-        # root_variance=np.array(frq_anlysis.calculate_root_variance_frequency(fft_magnitudes, freqs, SAMPLING_RATE, frequency_center))
-        # entropy=np.array(frq_anlysis.calculate_shannon_entropy(fft_magnitudes, freqs, SAMPLING_RATE))
+        # freqfeatures
+        mean_abs = np.array(frq_anlysis.calculate_mean_frequency(fft_magnitudes, freqs, SAMPLING_RATE))
+        std = np.array(frq_anlysis.calculate_std_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency))
+        skew = np.array(frq_anlysis.calculate_skewness_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency, std_frequency))
+        kurtosis = np.array(frq_anlysis.calculate_kurtosis_frequency(fft_magnitudes, freqs, SAMPLING_RATE, mean_frequency, std_frequency))
+        freq_center=np.array(frq_anlysis.calculate_frequency_center(fft_magnitudes, freqs, SAMPLING_RATE))
+        rmsf=np.array(frq_anlysis.calculate_rms_frequency(fft_magnitudes, freqs, SAMPLING_RATE))
+        root_variance=np.array(frq_anlysis.calculate_root_variance_frequency(fft_magnitudes, freqs, SAMPLING_RATE, frequency_center))
+        entropy=np.array(frq_anlysis.calculate_shannon_entropy(fft_magnitudes, freqs, SAMPLING_RATE))
 
 
         
